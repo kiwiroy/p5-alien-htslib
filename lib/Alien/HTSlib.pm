@@ -1,10 +1,10 @@
 package Alien::HTSlib;
-$Alien::HTSlib::VERSION = '0.03';
 
 use strict;
 use warnings;
+use base qw{ Alien::Base };
 
-use parent 'Alien::Base';
+our $VERSION = '0.03';
 
 1;
 
@@ -15,25 +15,27 @@ __END__
 =encoding UTF-8
 
 =head1 NAME
-    Alien::HTSlib - Fetch/build/stash the HTSlib headers and libs from http://htslib.org.
+
+Alien::HTSlib - Fetch/build/stash the HTSlib headers and libs from http://htslib.org.
 
 =head1 SYNOPSIS
-  Example of finding the headers and library that Alien::HTSlib installed.
 
-       $ENV{HTSLIB_DIR} || (
-          can_load(
-              modules => { 'Alien::HTSlib' => undef, 'File::ShareDir' => undef }
-          ) &&
-          File::ShareDir::dist_dir('Alien-HTSlib') );
+Example of finding the headers and library that Alien::HTSlib installed.
 
+  $ENV{HTSLIB_DIR} || (
+    can_load(
+        modules => { 'Alien::HTSlib' => undef, 'File::ShareDir' => undef }
+    ) &&
+    File::ShareDir::dist_dir('Alien-HTSlib') );
 
 =head1 DESCRIPTION
-    Download, build, and install the HTSlib C headers and libraries into a
-    well-known location, "File::ShareDir::dist_dir('Alien-HTSlib')", from
-    whence other packages can make use of them.
 
-    The version installed will be the latest release on the master branch from
-    the HTSlib GitHub repo.
+Download, build, and install the HTSlib C headers and libraries into a
+well-known location, "File::ShareDir::dist_dir('Alien-HTSlib')", from
+whence other packages can make use of them.
+
+The version installed will be the latest release on the master branch from
+the HTSlib GitHub repo.
 
 =head1 AUTHOR
 

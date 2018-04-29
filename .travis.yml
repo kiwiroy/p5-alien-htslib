@@ -1,0 +1,36 @@
+language: "perl"
+
+sudo: false
+
+os:
+  - linux
+  - osx
+
+osx_image: xcode7.3
+
+env:
+  - ALIEN_INSTALL_TYPE=share TYPE_DEFINED=1
+  - ALIEN_INSTALL_TYPE=default TYPE_DEFINED=1
+  - TYPE_DEFINED=0
+
+matrix:
+  exclude:
+    - os: osx
+      perl: "5.14"
+
+perl:
+  - "5.14"
+  - "5.26"
+
+before_install:
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      eval "$($HOME/perl5/perlbrew/bin/perlbrew env $TRAVIS_PERL_VERSION)"
+      export PATH=${PERLBREW_PATH:-$PERLBREW_ROOT/bin}:$PATH
+      perlbrew --quiet install-cpanm --force
+      cpanm --version
+      env | grep -i ^perl
+      export SSL_DIR=/usr/local/Cellar/openssl/1.0.2j
+    fi
+install:
+  - cpanm --installdeps -n -q --with-develop .
