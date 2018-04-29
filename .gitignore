@@ -1,3 +1,7 @@
 blib/
 pm_to_blib
 Makefile.old
+MYMETA.*
+_alien/
+*.bak
+scratch

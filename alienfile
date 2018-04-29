@@ -5,14 +5,14 @@ use alienfile;
 
 our $htslib_version = '1.7';
 
-# probe sub { 'share' };
-
 plugin 'PkgConfig' => (
   pkg_name => 'htslib',
 );
 
 share {
   requires 'Alien::curl' => '0.06';
+
+  meta_prop->{dest_dir} = 1;
 
   start_url "https://github.com/samtools/htslib/releases/download/${htslib_version}/htslib-${htslib_version}.tar.bz2";
 

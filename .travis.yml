@@ -34,3 +34,4 @@ before_install:
     fi
 install:
   - cpanm --installdeps -n -q --with-develop .
+  - cpanm --cpanfile ignore.cpanfile --installdeps -n -q .

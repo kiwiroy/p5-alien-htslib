@@ -10,4 +10,12 @@ local
 _alien/
 _build/
 _share/
+maint/
 blib/
+^pm_to_blib$
+^scratch$
+^Makefile$
+^Makefile\.old$
+^MANIFEST\.SKIP$
+\.bak$
+^\.travis\.yml$
