@@ -20,7 +20,7 @@ share {
 
   plugin Extract => ( format => 'tar.bz2' );
 
-  plugin 'Build::Autoconf' => ( with_pic => 0 );
+  plugin 'Build::Autoconf' => ( with_pic => 0 ); ## --with-pic creates configure warning.
 
   build [
     '%{configure} --enable-s3 --enable-libcurl --enable-gcs',
