@@ -28,6 +28,6 @@ share {
     '%{make} install'
   ];
 
-  test [ '%{make} check' ];
+  test [ '%{make} check' ] unless $ENV{ALIEN_HTSLIB_NO_CHECK};
 
 };

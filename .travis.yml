@@ -33,5 +33,7 @@ before_install:
       export SSL_DIR=/usr/local/Cellar/openssl/1.0.2j
     fi
 install:
-  - cpanm --installdeps -n -q --with-develop .
-  - cpanm --cpanfile ignore.cpanfile --installdeps -n -q .
+  - cpanm --installdeps -n -q .
+before_script:
+  - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags'
+  - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->libs'

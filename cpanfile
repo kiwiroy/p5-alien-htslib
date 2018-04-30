@@ -1,8 +1,21 @@
 # -*- mode: perl; -*-
 requires 'perl' => '5.008009';
-requires 'Alien::Base' => 0;
-requires 'Alien::curl' => '0.06';
-requires 'HTML::LinkExtor' => 0;
+
+on configure => sub {
+  requires 'Alien::Build'        => '0.32';
+  requires 'Alien::Build::MM'    => '0.32';
+  requires 'ExtUtils::MakeMaker' => 0;
+};
+
+on build => sub {
+  requires 'Alien::curl'     => '0.06';
+  requires 'HTML::LinkExtor' => 0;
+  requires 'IO::Socket::SSL' => 0;
+  requires 'Net::SSLeay'     => 0;
+  requires 'Sort::Versions'  => 0;
+  requires 'URI'             => 0;
+  requires 'URI::Escape'     => 0;
+};
 
 on develop => sub {
   requires 'App::af' => 0;

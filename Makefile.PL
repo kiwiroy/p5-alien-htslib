@@ -2,6 +2,8 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 use Alien::Build::MM;
+use Alien::curl;
+use Config;
 
 my $abmm = Alien::Build::MM->new;
 
@@ -14,10 +16,16 @@ WriteMakefile($abmm->mm_args(
   META_MERGE => {
     resources => {
       bugtracker => 'https://github.com/kiwiroy/alien-htslib/issues',
-      homepage => 'https://github.com/kiwiroy/alien-htslib',
+      homepage   => 'https://github.com/kiwiroy/alien-htslib',
       repository => 'https://github.com/kiwiroy/alien-htslib.git',
     },
   },
+  CONFIGURE_REQUIRES => {
+    'Alien::curl'  => 0,
+    'Alien::Build' => 0,
+  },
+  CCFLAGS => Alien::curl->cflags . " $Config{ccflags}",
+  LIBS    => [ Alien::curl->libs ],
 ));
 
 sub MY::postamble {
