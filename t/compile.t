@@ -6,8 +6,13 @@ use Alien::HTSlib;
 
 alien_ok 'Alien::HTSlib', 'loads';
 
+diag join ' ', $_, Alien::HTSlib->$_ for qw( cflags libs dynamic_libs bin_dir );
+
 my $xs = do { local $/ = undef; <DATA> };
-xs_ok { xs => $xs, verbose => $ENV{TEST_VERBOSE} }, with_subtest {
+xs_ok {
+  xs => $xs,
+  verbose => $ENV{TEST_VERBOSE},
+}, with_subtest {
   is CompileTest->check(), 'CompileTest',
     'CompileTest::check() returns CompileTest';
 };
