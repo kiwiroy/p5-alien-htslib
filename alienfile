@@ -12,6 +12,7 @@ plugin 'PkgConfig' => (
 
 share {
   requires 'Alien::curl' => '0.06';
+  requires 'Alien::Libbz2' => '0.22';
 
   start_url "https://github.com/samtools/htslib/releases/download/${htslib_version}/htslib-${htslib_version}.tar.bz2";
 
@@ -39,10 +40,16 @@ share {
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
-    $build->runtime_prop->{'libs_static'} = join ' ',
-      $build->runtime_prop->{'libs_static'}, Alien::curl->libs_static || '';
-    $build->runtime_prop->{'libs'} = join ' ',
-      $build->runtime_prop->{'libs'}, Alien::curl->libs || '';
+    $build->runtime_prop->{'libs_static'} = join(' ',
+      $build->runtime_prop->{'libs_static'},
+      Alien::curl->libs_static || '',
+      Alien::Libbz2->libs_static || ''
+      );
+    $build->runtime_prop->{'libs'} = join(' ',
+      $build->runtime_prop->{'libs'},
+      Alien::curl->libs || '',
+      Alien::Libbz2->libs || ''
+      );
   };
 
   test [ '%{make} check' ] unless $ENV{ALIEN_HTSLIB_NO_CHECK};
