@@ -15,9 +15,10 @@ os:
 osx_image: xcode7.3
 
 env:
-  - ALIEN_INSTALL_TYPE=share TYPE_DEFINED=1
-  - ALIEN_INSTALL_TYPE=default TYPE_DEFINED=1
-  - TYPE_DEFINED=0
+  - ALIEN_INSTALL_TYPE=share DEP_INSTALL_TYPE=share
+  - ALIEN_INSTALL_TYPE=share DEP_INSTALL_TYPE=default
+  - ALIEN_INSTALL_TYPE=default DEP_INSTALL_TYPE=default
+  - ALIEN_INSTALL_TYPE=default DEP_INSTALL_TYPE=share
 
 matrix:
   exclude:
@@ -41,9 +42,9 @@ before_install:
       export SSL_DIR=/usr/local/Cellar/openssl/1.0.2j
     fi
 install:
-  - cpanm --installdeps -n -q .
+  - ALIEN_INSTALL_TYPE=$DEP_INSTALL_TYPE cpanm --installdeps -n -q .
 before_script:
-  - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags'
-  - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->libs'
+  - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags; say Alien::curl->libs;'
+  - perl -MAlien::Libbz2 -Mv5.10 -le 'say Alien::Libbz2->cflags; say Alien::Libbz2->libs;
 after_failure:
   - cat _alien/state.json
