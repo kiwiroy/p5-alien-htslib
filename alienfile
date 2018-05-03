@@ -22,7 +22,7 @@ share {
   plugin 'Build::Autoconf' => ( with_pic => 0 ); ## --with-pic creates configure warning.
 
   build [
-    '%{configure} --enable-s3 --enable-libcurl --enable-gcs',
+    '%{configure} --enable-s3 --enable-libcurl --enable-gcs CFLAGS=-fpic',
     '%{make}',
     '%{make} install'
   ];
