@@ -1,3 +1,4 @@
+## -*- mode: perl; -*-
 use strict;
 use warnings;
 use Test::More;
@@ -6,12 +7,21 @@ use Alien::HTSlib;
 
 alien_ok 'Alien::HTSlib', 'loads';
 
-diag join ' ', $_, Alien::HTSlib->$_ for qw( cflags libs libs_static dynamic_libs bin_dir );
+if ($ENV{TEST_VERBOSE}) {
+    diag join ' ', $_, Alien::HTSlib->$_
+        for qw( cflags libs libs_static dynamic_libs bin_dir );
+}
 
 my $xs = do { local $/ = undef; <DATA> };
 xs_ok {
   xs => $xs,
   verbose => $ENV{TEST_VERBOSE},
+  cbuilder_compile => {
+      # extra_compile_flags = '',
+  },
+  cbuilder_link => {
+      # extra_linker_flags => '',
+  },
 }, with_subtest {
   is CompileTest->check(), 'CompileTest',
     'CompileTest::check() returns CompileTest';

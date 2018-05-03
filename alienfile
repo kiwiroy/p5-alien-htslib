@@ -4,7 +4,7 @@ use warnings;
 use alienfile;
 use Path::Tiny qw{path};
 
-our $htslib_version = '1.7';
+our $htslib_version = '1.8';
 
 plugin 'PkgConfig' => (
   pkg_name => 'htslib',
@@ -40,16 +40,12 @@ share {
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
-    $build->runtime_prop->{'libs_static'} = join(' ',
-      $build->runtime_prop->{'libs_static'},
-      Alien::curl->libs_static || '',
-      Alien::Libbz2->libs_static || ''
-      );
-    $build->runtime_prop->{'libs'} = join(' ',
-      $build->runtime_prop->{'libs'},
-      Alien::curl->libs || '',
-      Alien::Libbz2->libs || ''
-      );
+    for (qw{libs libs_static}) {
+        $build->runtime_prop->{$_} =
+            join ' ', $build->runtime_prop->{$_}, '-lcurl'
+            unless $build->runtime_prop->{$_} =~ m/\-lcurl/;
+    }
+
   };
 
   test [ '%{make} check' ] unless $ENV{ALIEN_HTSLIB_NO_CHECK};

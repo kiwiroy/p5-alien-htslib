@@ -6,8 +6,8 @@ use base qw{ Alien::Base };
 
 our $VERSION = '0.04';
 
-sub cflags { shift->cflags_static; }
-sub libs   { shift->libs_static;   }
+# sub cflags { shift->cflags_static; }
+# sub libs   { shift->libs_static;   }
 
 1;
 
