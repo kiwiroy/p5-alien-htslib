@@ -8,6 +8,7 @@ on configure => sub {
 };
 
 on build => sub {
+  requires 'Alien::Libbz2'   => '0.22';
   requires 'Alien::curl'     => '0.06';
   requires 'HTML::LinkExtor' => 0;
   requires 'IO::Socket::SSL' => 0;

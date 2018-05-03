@@ -2,8 +2,9 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 use Alien::Build::MM;
+use Alien::Libbz2;
 use Alien::curl;
-use Alien::Base::Wrapper qw( Alien::curl !export );
+use Alien::Base::Wrapper qw( Alien::Libbz2 Alien::curl !export );
 use Config;
 
 my $abmm = Alien::Build::MM->new;
@@ -22,6 +23,7 @@ WriteMakefile($abmm->mm_args(
     },
   },
   CONFIGURE_REQUIRES => {
+    'Alien::Libbz2' => 0,
     'Alien::curl'  => 0,
     'Alien::Build' => 0,
   },
