@@ -6,7 +6,7 @@ use Alien::HTSlib;
 
 alien_ok 'Alien::HTSlib', 'loads';
 
-# diag join ' ', $_, Alien::HTSlib->$_ for qw( cflags libs libs_static dynamic_libs bin_dir );
+diag join ' ', $_, Alien::HTSlib->$_ for qw( cflags libs libs_static dynamic_libs bin_dir );
 
 my $xs = do { local $/ = undef; <DATA> };
 xs_ok {

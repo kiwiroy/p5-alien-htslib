@@ -37,3 +37,5 @@ install:
 before_script:
   - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags'
   - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->libs'
+after_failure:
+  - cat _alien/state.json
