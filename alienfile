@@ -40,10 +40,17 @@ share {
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
-    for (qw{libs libs_static}) {
-        $build->runtime_prop->{$_} =
-            join ' ', $build->runtime_prop->{$_}, '-lcurl'
-            unless $build->runtime_prop->{$_} =~ m/\-lcurl/;
+    my @aliens = qw{Alien::curl Alien::Libbz2};
+    my $is_share = sub {
+      $_->install_type eq 'share' && $_->can('cflags_static')
+    };
+    for my $key (qw{libs libs_static}) {
+        $build->runtime_prop->{$key} =
+            join(' ',
+                 $build->runtime_prop->{$key},
+                 ($build->runtime_prop->{$key} !~ m/\-lcurl/ ? '-lcurl' : ''),
+                 map { $_->$key() } grep { $is_share->() } @aliens
+                 );
     }
 
   };
