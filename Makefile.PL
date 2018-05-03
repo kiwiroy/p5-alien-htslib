@@ -3,6 +3,7 @@ use warnings;
 use ExtUtils::MakeMaker;
 use Alien::Build::MM;
 use Alien::curl;
+use Alien::Base::Wrapper qw( Alien::curl !export );
 use Config;
 
 my $abmm = Alien::Build::MM->new;
@@ -24,8 +25,7 @@ WriteMakefile($abmm->mm_args(
     'Alien::curl'  => 0,
     'Alien::Build' => 0,
   },
-  CCFLAGS => Alien::curl->cflags . " $Config{ccflags}",
-  LIBS    => [ Alien::curl->libs ],
+  Alien::Base::Wrapper->mm_args,
 ));
 
 sub MY::postamble {

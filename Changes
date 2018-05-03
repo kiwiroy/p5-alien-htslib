@@ -1,4 +1,8 @@
 
+0.04 Not Released
+  * Modernised to use alienfile
+  * HTSlib 1.8
+
 0.03
    * Alien::Base::ModuleBuild used in config_requires
 

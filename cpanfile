@@ -2,8 +2,8 @@
 requires 'perl' => '5.008009';
 
 on configure => sub {
-  requires 'Alien::Build'        => '0.32';
-  requires 'Alien::Build::MM'    => '0.32';
+  requires 'Alien::Build'        => '1.41';
+  requires 'Alien::Build::MM'    => '1.41';
   requires 'ExtUtils::MakeMaker' => 0;
 };
 

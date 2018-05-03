@@ -6,15 +6,15 @@ use Alien::HTSlib;
 
 alien_ok 'Alien::HTSlib', 'loads';
 
-# diag join ' ', $_, Alien::HTSlib->$_ for qw( cflags libs libs_static dynamic_libs bin_dir );
-
 my $xs = do { local $/ = undef; <DATA> };
 xs_ok {
   xs => $xs,
   verbose => $ENV{TEST_VERBOSE},
 }, with_subtest {
-  is CompileTest->check(), 'CompileTest',
-    'CompileTest::check() returns CompileTest';
+  is Hts->isremote("t/data/test.sam"), 0,
+    'Hts->isremote("local") returns 0';
+  is Hts->isremote("https://server.co.nz/test.sam"), 1,
+    'Hts->isremote("remote") returns 1';
 };
 
 done_testing;
@@ -25,11 +25,12 @@ __DATA__
 #include "XSUB.h"
 #include "htslib/hts.h"
 
-MODULE = CompileTest PACKAGE = CompileTest
+MODULE = Hts PACKAGE = Hts
 
-char *check(class)
+int isremote(class, filename)
   char *class;
+  char *filename;
   CODE:
-    RETVAL = class;
+    RETVAL = hisremote(filename);
   OUTPUT:
     RETVAL

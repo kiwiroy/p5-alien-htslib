@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use base qw{ Alien::Base };
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 1;
 
@@ -20,19 +20,38 @@ Alien::HTSlib - Fetch/build/stash the HTSlib headers and libs from http://htslib
 
 =head1 SYNOPSIS
 
-Example of finding the headers and library that Alien::HTSlib installed.
+Access to paths where the library is installed.
 
-  $ENV{HTSLIB_DIR} || (
-    can_load(
-        modules => { 'Alien::HTSlib' => undef, 'File::ShareDir' => undef }
-    ) &&
-    File::ShareDir::dist_dir('Alien-HTSlib') );
+  use Alien::HTSlib;
+
+  ## distribution directory
+  Alien::HTSlib->dist_dir;
+
+  ## directory for $PATH where bgzip, htsfile and tabix are found
+  Alien::HTSlib->bin_dir;
+
+  ## compile and linker options
+  Alien::HTSlib->cflags;
+  Alien::HTSlib->libs;
+
+Using L<ExtUtils::MakeMaker> and C<Makefile.PL>.
+
+  use Alien::HTSlib;
+  use ExtUtils::MakeMaker;
+  use Alien::Base::Wrapper qw( Alien::HTSlib !export );
+  use Config;
+
+  WriteMakefile(
+    # ...
+    Alien::Base::Wrapper->mm_args,
+    # ...
+    );
 
 =head1 DESCRIPTION
 
 Download, build, and install the HTSlib C headers and libraries into a
-well-known location, "File::ShareDir::dist_dir('Alien-HTSlib')", from
-whence other packages can make use of them.
+well-known location, C<<< Alien::HTSlib->dist_dir >>>, from whence other
+packages can make use of them.
 
 The version installed will be the latest release on the master branch from
 the HTSlib GitHub repo.
