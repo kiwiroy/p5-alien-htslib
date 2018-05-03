@@ -35,6 +35,7 @@ share {
     ## we use the static library only, remove any dynamic libs
     push @dynamic, glob "$stage/*.dylib";
     push @dynamic, glob "$stage/*.so";
+    push @dynamic, glob "$stage/*.so.*";
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
