@@ -47,13 +47,12 @@ share {
     for my $key (qw{libs libs_static}) {
         $build->runtime_prop->{$key} =
             join(' ',
-                 (map { $_->$key() } grep { $is_share->() } @aliens),
-                 $build->runtime_prop->{$key}
+                 $build->runtime_prop->{$key},
+                 ($build->runtime_prop->{$key} !~ m/\-lcurl/ ? '-lcurl' : ''),
+                 map { $_->$key() } grep { $is_share->() } @aliens
                  );
-        $build->runtime_prop->{$key} .= ' -lcurl'
-          if $build->runtime_prop->{$key} !~ m/\-lcurl/;
     }
-
+    
   };
 
   test [ '%{make} check' ] unless $ENV{ALIEN_HTSLIB_NO_CHECK};
