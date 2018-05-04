@@ -46,5 +46,7 @@ install:
 before_script:
   - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags; say Alien::curl->libs;'
   - perl -MAlien::Libbz2 -Mv5.10 -le 'say Alien::Libbz2->cflags; say Alien::Libbz2->libs;'
+script:
+  - perl Makefile.PL && make test TEST_VERBOSE=1
 after_failure:
   - cat _alien/state.json
