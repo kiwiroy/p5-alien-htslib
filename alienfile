@@ -11,8 +11,9 @@ plugin 'PkgConfig' => (
 );
 
 share {
-  requires 'Alien::curl' => '0.06';
+  requires 'Alien::curl'   => '0.06';
   requires 'Alien::Libbz2' => '0.22';
+  requires 'Alien::xz'     => '0.07';
 
   start_url "https://github.com/samtools/htslib/releases/download/${htslib_version}/htslib-${htslib_version}.tar.bz2";
 
@@ -23,7 +24,7 @@ share {
   plugin 'Build::Autoconf' => ( with_pic => 0 ); ## --with-pic creates configure warning.
 
   build [
-    '%{configure} --enable-s3 --enable-libcurl --enable-gcs CFLAGS=-fpic',
+    '%{configure} --enable-s3 --enable-libcurl --enable-gcs CFLAGS=-fPIC',
     '%{make}',
     '%{make} install'
   ];
@@ -40,7 +41,7 @@ share {
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
-    my @aliens = qw{Alien::curl Alien::Libbz2};
+    my @aliens = qw{Alien::curl Alien::Libbz2 Alien::xz};
     my $is_share = sub {
       $_->install_type eq 'share' && $_->can('cflags_static')
     };
@@ -52,7 +53,7 @@ share {
                  map { $_->$key() } grep { $is_share->() } @aliens
                  );
     }
-    
+
   };
 
   test [ '%{make} check' ] unless $ENV{ALIEN_HTSLIB_NO_CHECK};
