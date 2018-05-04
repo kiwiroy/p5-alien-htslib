@@ -45,6 +45,6 @@ install:
   - ALIEN_INSTALL_TYPE=$DEP_INSTALL_TYPE cpanm --installdeps -n -q .
 before_script:
   - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags; say Alien::curl->libs;'
-  - perl -MAlien::Libbz2 -Mv5.10 -le 'say Alien::Libbz2->cflags; say Alien::Libbz2->libs;
+  - perl -MAlien::Libbz2 -Mv5.10 -le 'say Alien::Libbz2->cflags; say Alien::Libbz2->libs;'
 after_failure:
   - cat _alien/state.json
