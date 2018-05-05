@@ -7,8 +7,7 @@ addons:
     packages:
     - libbz2-dev
     - libcurl4-openssl-dev
-    - xz-lzma
-    - xz-utils
+    - liblzma-dev
 
 os:
   - linux
