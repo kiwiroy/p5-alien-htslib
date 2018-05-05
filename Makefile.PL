@@ -4,7 +4,9 @@ use ExtUtils::MakeMaker;
 use Alien::Build::MM;
 use Alien::Libbz2;
 use Alien::curl;
-use Alien::Base::Wrapper qw( Alien::Libbz2 Alien::curl !export );
+use Alien::xz;
+use Alien::libdeflate;
+use Alien::Base::Wrapper qw( Alien::Libbz2 Alien::curl Alien::xz Alien::libdeflate !export );
 use Config;
 
 my $abmm = Alien::Build::MM->new;
@@ -23,9 +25,11 @@ WriteMakefile($abmm->mm_args(
     },
   },
   CONFIGURE_REQUIRES => {
-    'Alien::Libbz2' => 0,
-    'Alien::curl'  => 0,
-    'Alien::Build' => 0,
+    'Alien::Libbz2' => 0.22,
+    'Alien::curl'  => 0.06,
+    'Alien::xz'    => 0.07,
+    'Alien::Build' => 1.41,
+    'Alien::libdeflate' => '0.01',
   },
   Alien::Base::Wrapper->mm_args,
 ));

@@ -12,6 +12,7 @@ plugin 'PkgConfig' => (
 
 share {
   requires 'Alien::curl'   => '0.06';
+  requires 'Alien::libdeflate' => '0.01';
   requires 'Alien::Libbz2' => '0.22';
   requires 'Alien::xz'     => '0.07';
 
@@ -23,8 +24,15 @@ share {
 
   plugin 'Build::Autoconf' => ( with_pic => 0 ); ## --with-pic creates configure warning.
 
+  meta->interpolator->add_helper(libdeflate_cflags => sub {
+    return Alien::libdeflate->cflags;
+  });
+  meta->interpolator->add_helper(libdeflate_libs => sub {
+    return Alien::libdeflate->libs;
+  });
+
   build [
-    '%{configure} --enable-s3 --enable-libcurl --enable-gcs CFLAGS=-fPIC',
+    '%{configure} --enable-s3 --enable-libcurl --enable-gcs --with-libdeflate CFLAGS="-fPIC %{libdeflate_cflags}" LDFLAGS="%{libdeflate_libs}"',
     '%{make}',
     '%{make} install'
   ];
@@ -41,7 +49,7 @@ share {
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
-    my @aliens = qw{Alien::curl Alien::Libbz2 Alien::xz};
+    my @aliens = qw{Alien::curl Alien::Libbz2 Alien::xz Alien::libdeflate};
     my $is_share = sub {
       $_->install_type eq 'share' && $_->can('cflags_static')
     };

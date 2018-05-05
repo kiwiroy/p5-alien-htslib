@@ -11,6 +11,7 @@ on build => sub {
   requires 'Alien::Libbz2'   => '0.22';
   requires 'Alien::curl'     => '0.06';
   requires 'Alien::xz'       => '0.07';
+  requires 'Alien::libdeflate' => '0.01';
   requires 'HTML::LinkExtor' => 0;
   requires 'IO::Socket::SSL' => 0;
   requires 'Net::SSLeay'     => 0;
