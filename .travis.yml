@@ -51,3 +51,9 @@ script:
   - perl Makefile.PL && make test TEST_VERBOSE=1
 after_failure:
   - cat _alien/state.json
+  - |
+    if [[ "$DEP_INSTALL_TYPE" == "default" ]]; then
+      nm /usr/lib/*/libbz2.a
+      nm /usr/lib/*/libbz2.so
+      nm /lib/*/libbz2.so.*
+    fi
