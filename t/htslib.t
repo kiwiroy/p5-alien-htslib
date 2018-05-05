@@ -11,7 +11,7 @@ my $xs = do { local $/ = undef; <DATA> };
 xs_ok {
   xs => $xs,
   verbose => $ENV{TEST_VERBOSE},
-}, with_subtest {
+}, 'build htslib xs', with_subtest {
   is Hts->isremote("t/data/test.sam"), 0,
     'Hts->isremote("local") returns 0';
   is Hts->isremote("https://server.co.nz/test.sam"), 1,
@@ -25,6 +25,7 @@ __DATA__
 #include "perl.h"
 #include "XSUB.h"
 #include "htslib/hts.h"
+#include "htslib/hfile.h"
 
 MODULE = Hts PACKAGE = Hts
 
