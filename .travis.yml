@@ -54,6 +54,6 @@ after_failure:
   - |
     if [[ "$DEP_INSTALL_TYPE" == "default" ]]; then
       nm /usr/lib/*/libbz2.a
-      nm /usr/lib/*/libbz2.so
-      nm /lib/*/libbz2.so.*
+      nm -D /usr/lib/*/libbz2.so
+      nm -D /lib/*/libbz2.so.*
     fi
