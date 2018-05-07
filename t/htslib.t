@@ -4,6 +4,7 @@ use warnings;
 use Test::More;
 use Test::Alien qw{alien_ok with_subtest xs_ok};
 use Alien::HTSlib;
+use Path::Tiny qw{path};
 
 alien_ok 'Alien::HTSlib', 'loads';
 
@@ -13,12 +14,18 @@ xs_ok {
   verbose => $ENV{TEST_VERBOSE},
   cbuilder_link => {
       # extra_linker_flags => '-Wl,-rpath,/lib/x86_64-linux-gnu',
-      (-d '/usr/lib/x86_64-linux-gnu'
-        ? (extra_linker_flags => '-Wl,-rpath,/usr/lib/x86_64-linux-gnu')
-        : ()
-        )
+      # (-d '/usr/lib/x86_64-linux-gnu'
+      #   ? (extra_linker_flags => '-Wl,-rpath,/usr/lib/x86_64-linux-gnu')
+      #   : ()
+      #   )
   },
 }, 'build htslib xs', with_subtest {
+  my ($tempdir) = glob 'testalien*';
+  my $so = path($tempdir)->absolute->child('auto/Hts/Hts.so')->stringify();
+  diag "ldd $so";
+  system('ldd', $so);
+  diag "nm $so";
+  system('nm', $so);
   is Hts->isremote("t/data/test.sam"), 0,
     'Hts->isremote("local") returns 0';
   is Hts->isremote("https://server.co.nz/test.sam"), 1,
