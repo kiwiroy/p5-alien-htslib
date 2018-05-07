@@ -49,6 +49,9 @@ before_script:
   - perl -MAlien::Libbz2 -Mv5.10 -le 'say Alien::Libbz2->cflags; say Alien::Libbz2->libs;'
 script:
   - perl Makefile.PL && make test TEST_VERBOSE=1
+  - perl Makefile.PL
+  - make
+  - env LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu prove -v
 after_failure:
   - cat _alien/state.json
   - |
