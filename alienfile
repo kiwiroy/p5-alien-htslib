@@ -32,7 +32,7 @@ share {
   });
 
   build [
-    '%{configure} --enable-s3 --enable-libcurl --enable-gcs --with-libdeflate CFLAGS="-fPIC %{libdeflate_cflags}" LDFLAGS="%{libdeflate_libs}"',
+    '%{configure} --enable-s3 --enable-libcurl --enable-gcs --with-libdeflate CFLAGS="%{libdeflate_cflags}" LDFLAGS="%{libdeflate_libs}"',
     '%{make}',
     '%{make} install'
   ];
@@ -49,7 +49,7 @@ share {
     push @dynamic, glob "$stage/*.dll";
     unlink @dynamic if @dynamic;
 
-    my @aliens = qw{Alien::curl Alien::Libbz2 Alien::xz Alien::libdeflate};
+    my @aliens = qw{Alien::curl Alien::xz Alien::Libbz2 Alien::libdeflate};
     my $is_share = sub {
       $_->install_type eq 'share' && $_->can('cflags_static')
     };

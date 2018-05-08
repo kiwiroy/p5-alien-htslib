@@ -44,18 +44,7 @@ before_install:
     fi
 install:
   - ALIEN_INSTALL_TYPE=$DEP_INSTALL_TYPE cpanm --installdeps -n -q .
-before_script:
-  - perl -MAlien::curl -Mv5.10 -le 'say Alien::curl->cflags; say Alien::curl->libs;'
-  - perl -MAlien::Libbz2 -Mv5.10 -le 'say Alien::Libbz2->cflags; say Alien::Libbz2->libs;'
 script:
-  - perl Makefile.PL
-  - make
-  - env LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu prove -v
+  - perl Makefile.PL && make test TEST_VERBOSE=1
 after_failure:
   - cat _alien/state.json
-  - |
-    if [[ "$DEP_INSTALL_TYPE" == "default" ]]; then
-      nm /usr/lib/*/libbz2.a
-      nm -D /usr/lib/*/libbz2.so
-      nm -D /lib/*/libbz2.so.*
-    fi
