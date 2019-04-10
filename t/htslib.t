@@ -12,7 +12,7 @@ xs_ok {
   xs => $xs,
   verbose => $ENV{TEST_VERBOSE},
   cbuilder_link => {
-      # extra_linker_flags => '-Wl,-rpath,/lib/x86_64-linux-gnu',
+      extra_linker_flags => '-fPIC',
       # (-d '/usr/lib/x86_64-linux-gnu'
       #   ? (extra_linker_flags => '-Wl,-rpath,/usr/lib/x86_64-linux-gnu')
       #   : ()
