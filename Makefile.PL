@@ -19,16 +19,16 @@ WriteMakefile($abmm->mm_args(
   MIN_PERL_VERSION => '5.008009',
   META_MERGE => {
     resources => {
-      bugtracker => 'https://github.com/kiwiroy/alien-htslib/issues',
-      homepage   => 'https://github.com/kiwiroy/alien-htslib',
-      repository => 'https://github.com/kiwiroy/alien-htslib.git',
+      bugtracker => 'https://github.com/kiwiroy/p5-alien-htslib/issues',
+      homepage   => 'https://github.com/kiwiroy/p5-alien-htslib',
+      repository => 'https://github.com/kiwiroy/p5-alien-htslib.git',
     },
   },
   CONFIGURE_REQUIRES => {
-    'Alien::Libbz2' => 0.22,
-    'Alien::curl'  => 0.06,
-    'Alien::xz'    => 0.07,
-    'Alien::Build' => 1.41,
+    'Alien::Libbz2'     => '0.22',
+    'Alien::curl'       => '0.06',
+    'Alien::xz'         => '0.07',
+    'Alien::Build'      => '1.41',
     'Alien::libdeflate' => '0.01',
   },
   Alien::Base::Wrapper->mm_args,

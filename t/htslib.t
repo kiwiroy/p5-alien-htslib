@@ -12,10 +12,10 @@ xs_ok {
   xs => $xs,
   verbose => $ENV{TEST_VERBOSE},
   cbuilder_compile => {
-      # extra_compile_flags = '',
+#      extra_compile_flags => [ '-fPIC' ],
   },
   cbuilder_link => {
-#      extra_linker_flags => '-fPIC',
+#        extra_linker_flags => [ '-fPIC' ],
       # (-d '/usr/lib/x86_64-linux-gnu'
       #   ? (extra_linker_flags => '-Wl,-rpath,/usr/lib/x86_64-linux-gnu')
       #   : ()
